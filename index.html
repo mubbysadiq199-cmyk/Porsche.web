@@ -28,13 +28,69 @@
     }
 
     /* ===== NAV ===== */
-    header.nav{
-      position:fixed; inset:0 0 auto 0;
-      display:flex; align-items:center; justify-content:space-between;
-      padding:14px 22px; z-index:10;
-      background:linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,0));
-      border-bottom:1px solid rgba(255,255,255,.06);
-    }
+  header.nav{
+  position:fixed;
+  top:0; left:0; right:0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px 22px;
+  z-index:10;
+  background:linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,0));
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+/* Brand */
+.brand{
+  font-family:"Teko",system-ui;
+  font-weight:700;
+  text-transform:uppercase;
+  font-size:1.05rem;
+  letter-spacing:.06em;
+  opacity:.95;
+  white-space:nowrap;
+}
+
+/* Desktop nav links */
+nav.nav{
+  display:flex;
+  gap:1.5rem;
+}
+.nav a{
+  color:#fff;
+  text-decoration:none;
+  font-size:.95rem;
+  opacity:.9;
+  font-weight:500;
+  transition:opacity .3s ease;
+}
+.nav a:hover{ opacity:1; }
+
+/* Mobile */
+@media(max-width:640px){
+  nav.nav{
+    position:fixed;
+    top:64px; right:0;
+    flex-direction:column;
+    background:rgba(0,0,0,.9);
+    padding:1rem 1.5rem;
+    border-left:1px solid rgba(255,255,255,.1);
+    backdrop-filter:blur(6px);
+    transform:translateX(100%);
+    transition:transform .3s ease;
+  }
+  nav.nav.open{ transform:translateX(0); }
+  .menu-toggle{
+    width:34px; height:28px;
+    display:flex; flex-direction:column;
+    justify-content:space-between;
+    cursor:pointer;
+  }
+  .menu-toggle span{
+    height:3px; width:100%; background:#fff;
+    border-radius:3px;
+  }
+}
     .brand{
       font-family:"Teko",system-ui;
       font-weight:700; letter-spacing:.06em; text-transform:uppercase;
@@ -123,14 +179,19 @@
   </style>
 </head>
 <body>
-  <header class="nav" role="navigation" aria-label="Primary">
-    <div class="brand">The 911 Experience</div>
-    <nav class="nav"><nav class="nav">
-  <a href="gallery.html">Gallery</a>
-  <a href="media.html">Audio & Video</a>
-  <a href="specs.html">Specs</a>
-    </nav>
-  </header>
+  <header class="nav">
+  <div class="brand">The 911 Experience</div>
+
+  <div class="menu-toggle" id="menuToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </div>
+
+  <nav class="nav" id="mainNav">
+    <a href="gallery.html">Gallery</a>
+    <a href="media.html">Audio & Video</a>
+    <a href="specs.html">Specs</a>
+  </nav>
+</header>
 
   <main id="main">
     <section class="hero" id="hero" aria-label="Porsche 911 hero">
@@ -212,6 +273,11 @@
         showA = !showA;
       }, ROTATION_MS);
     })();
+    
+  const menuToggle = document.getElementById("menuToggle");
+  const mainNav = document.getElementById("mainNav");
+  menuToggle.addEventListener("click", ()=> mainNav.classList.toggle("open"));
+
   </script>
 </body>
 </html>
