@@ -3,159 +3,119 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Precision Meets Power</title>
+  <meta name="theme-color" content="#000000" />
+  <title>The 911 Experience — Power. Precision. Porsche.</title>
+
+  <!-- Fonts (Porsche vibe): Teko (headings), Sora (body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600&family=Teko:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Preload first hero images to avoid initial flash -->
+  <link rel="preload" as="image" href="assets/porsche-hero-1.jpg">
+  <link rel="preload" as="image" href="assets/porsche-hero-2.jpg">
+
   <style>
     :root{
-      --brand-accent:#d4af37; /* gold */
-      --brand-accent-2:#f0c75e;
-      --text:#ffffff;
-      --bg:#000000;
+      --gold:#d4af37; --gold-2:#f0c75e;
+      --txt:#ffffff; --bg:#000000;
     }
-
-    *{box-sizing:border-box;margin:0;padding:0}
-
+    *{ box-sizing:border-box; margin:0; padding:0 }
     body{
-      font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;
-      background:var(--bg);
-      color:var(--text);
-      overflow-x:hidden;
+      font-family:"Sora",system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;
+      background:var(--bg); color:var(--txt); overflow-x:hidden;
+      text-rendering:optimizeLegibility; -webkit-font-smoothing:antialiased;
     }
 
-    /* HERO */
+    /* ===== NAV ===== */
+    header.nav{
+      position:fixed; inset:0 0 auto 0;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 22px; z-index:10;
+      background:linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,0));
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .brand{
+      font-family:"Teko",system-ui;
+      font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+      font-size:1.05rem; opacity:.95;
+    }
+    .nav a{ color:#fff; text-decoration:none; opacity:.9; font-size:.95rem }
 
+    /* ===== HERO ===== */
     .hero{
-  position:relative;
-  min-height:100svh;
-  display:grid;
-  place-items:center;
-  overflow:hidden;
-  background:#000;
-  isolation:isolate;
-}
+      position:relative; min-height:100svh;
+      display:grid; place-items:center; overflow:hidden;
+      background:#000; isolation:isolate;
+    }
+    .hero .container{
+      width:min(1200px,92%); margin-inline:auto; text-align:center; position:relative; z-index:1;
+    }
 
-/* overlay for readability */
-.hero::after{
-  content:"";
-  position:absolute; inset:0;
-  z-index:0;
-  background:
-    radial-gradient(120% 80% at 50% 100%, rgba(0,0,0,.85) 0%, rgba(0,0,0,.4) 35%, rgba(0,0,0,.6) 60%, rgba(0,0,0,.92) 100%),
-    linear-gradient(180deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,.8) 100%);
-  pointer-events:none;
-}
+    /* overlay for readability */
+    .hero::after{
+      content:""; position:absolute; inset:0; z-index:0;
+      background:
+        radial-gradient(120% 80% at 50% 100%, rgba(0,0,0,.85) 0%, rgba(0,0,0,.4) 35%, rgba(0,0,0,.6) 60%, rgba(0,0,0,.92) 100%),
+        linear-gradient(180deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,.8) 100%);
+      pointer-events:none;
+    }
 
-.hero .container{ position:relative; z-index:1; text-align:center }
-
-/* two image layers that fade */
-.hero-layer{
-  position:absolute; inset:0;
-  background-position:center;
-  background-size:cover;
-  background-repeat:no-repeat;
-  filter:brightness(.72); /* keeps text legible */
-  will-change:opacity, transform;
-  transform:scale(1.02); /* tiny zoom for depth */
-}
-
-/* start states */
-.layer-a{ opacity:1 }
-.layer-b{ opacity:0 }
-
-/* smooth crossfade + slight zoom easing */
-.hero-layer{
-  transition:
-    opacity 1200ms cubic-bezier(.22,.61,.36,1),
-    transform 5200ms cubic-bezier(.22,.61,.36,1);
-}
-
-/* accessible motion */
-@media (prefers-reduced-motion: reduce){
-  .hero-layer{ transition:none; transform:none }
-}
+    /* two image layers for true crossfade */
+    .hero-layer{
+      position:absolute; inset:0;
+      background-position:center; background-size:cover; background-repeat:no-repeat;
+      filter:brightness(.72);
+      will-change:opacity, transform;
+      transform:scale(1.02);
+    }
+    .layer-a{ opacity:1 }
+    .layer-b{ opacity:0 }
+    .hero-layer{
+      transition:
+        opacity 1200ms cubic-bezier(.22,.61,.36,1),
+        transform 5200ms cubic-bezier(.22,.61,.36,1);
+    }
+    @media (prefers-reduced-motion: reduce){
+      .hero-layer{ transition:none; transform:none }
+    }
 
     .eyebrow{
-      letter-spacing:.35em;
-      text-transform:uppercase;
-      font-weight:500;
-      opacity:.9;
-      font-size:.85rem;
+      font-family:"Teko"; letter-spacing:.35em; text-transform:uppercase;
+      font-weight:600; opacity:.9; font-size:.95rem;
     }
-
     h1.hero-title{
-      margin-top:.75rem;
-      font-weight:700;
-      line-height:1.02;
-      font-size:clamp(2rem, 6vw, 4.25rem);
-      letter-spacing:.02em;
+      margin-top:.6rem; font-family:"Teko";
+      font-weight:700; line-height:1.02;
+      font-size:clamp(2.2rem, 6vw, 4.5rem); letter-spacing:.015em;
+      text-transform:uppercase;
     }
-
     p.hero-sub{
-      margin-top:1rem;
-      font-weight:300;
-      opacity:.9;
+      margin-top:1rem; font-weight:300; opacity:.9;
       font-size:clamp(0.95rem, 2.2vw, 1.15rem);
     }
 
     .cta-row{
-      margin-top:2rem;
-      display:flex;
-      gap:.9rem;
-      justify-content:center;
-      flex-wrap:wrap;
+      margin-top:2rem; display:flex; gap:.9rem; justify-content:center; flex-wrap:wrap;
     }
-
     .btn{
-      appearance:none;
-      border:none;
-      cursor:pointer;
-      padding:.9rem 1.4rem;
-      border-radius:999px;
-      font-weight:600;
-      text-decoration:none;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:.5rem;
+      appearance:none; border:none; cursor:pointer;
+      padding:.9rem 1.4rem; border-radius:999px; font-weight:600; text-decoration:none;
+      display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
       transition:transform .25s ease, opacity .25s ease, box-shadow .25s ease;
       will-change:transform;
     }
-
     .btn-primary{
-      background:linear-gradient(90deg, var(--brand-accent), var(--brand-accent-2));
-      color:#000;
+      background:linear-gradient(90deg, var(--gold), var(--gold-2)); color:#000;
       box-shadow:0 10px 30px rgba(212,175,55,.25);
     }
     .btn-ghost{
-      background:rgba(255,255,255,.08);
-      color:#fff;
-      border:1px solid rgba(255,255,255,.15);
-      backdrop-filter:saturate(140%) blur(6px);
+      background:rgba(255,255,255,.08); color:#fff;
+      border:1px solid rgba(255,255,255,.15); backdrop-filter:saturate(140%) blur(6px);
     }
-    .btn:hover{ transform:translateY(-2px); }
+    .btn:hover{ transform:translateY(-2px) }
 
-    /* Header (optional simple brand spot) */
-    header.nav{
-      position:fixed;
-      top:0; left:0; right:0;
-      display:flex; align-items:center; justify-content:space-between;
-      padding:14px 22px;
-      z-index:10;
-      background:linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,0));
-      border-bottom:1px solid rgba(255,255,255,.06);
-    }
-    .brand{ font-weight:700; letter-spacing:.08em; text-transform:uppercase; font-size:.95rem; opacity:.95; }
-    .nav a{ color:#fff; text-decoration:none; opacity:.9; font-size:.9rem; }
-
-    /* Accessibility: skip fade-in flash on prefers-reduced-motion */
-    @media (prefers-reduced-motion: reduce){
-      .hero::before{ transition:none }
-      .btn{ transition:none }
-    }
-
-    /* Mobile spacing */
+    /* mobile spacing */
     @media (max-width:520px){
       .cta-row{ gap:.6rem }
       .btn{ padding:.8rem 1.1rem; font-size:.95rem }
@@ -163,95 +123,95 @@
   </style>
 </head>
 <body>
-  <header class="nav">
+  <header class="nav" role="navigation" aria-label="Primary">
     <div class="brand">The 911 Experience</div>
-    <nav class="nav">
-      <a href="specs.html">Specs</a>
+    <nav class="nav"><nav class="nav">
+  <a href="gallery.html">Gallery</a>
+  <a href="media.html">Audio & Video</a>
+  <a href="specs.html">Specs</a>
     </nav>
   </header>
 
-  <main>
- <section class="hero" id="hero">
-  <!-- two layers for smooth crossfade -->
-  <div class="hero-layer layer-a" aria-hidden="true"></div>
-  <div class="hero-layer layer-b" aria-hidden="true"></div>
+  <main id="main">
+    <section class="hero" id="hero" aria-label="Porsche 911 hero">
+      <!-- image layers -->
+      <div class="hero-layer layer-a" aria-hidden="true"></div>
+      <div class="hero-layer layer-b" aria-hidden="true"></div>
 
-  <div class="container">
-    <div class="eyebrow">Porsche 911 Series</div>
-    <h1 class="hero-title">The Silence Before 700 Horses Awaken.</h1>
-    <p class="hero-sub">Pure adrenaline, refined in metal and motion.</p>
-    <div class="cta-row">
-      <a class="btn btn-primary" href="explore.html">Explore Models</a>
-      <a class="btn btn-ghost" href="specs.html">View Specs</a>
-    </div>
-  </div>
-</section>
+      <div class="container">
+        <p class="eyebrow">Porsche 911 Series</p>
+        <h1 class="hero-title">The Silence Before 700 Horses Awaken.</h1>
+        <p class="hero-sub">Pure adrenaline, refined in metal and motion.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="explore.html">Explore Models</a>
+          <a class="btn btn-ghost" href="specs.html">View Specs</a>
+        </div>
+      </div>
+    </section>
   </main>
 
   <script>
-  // Config
-  const ROTATION_MS = 6000;   // time each image stays before crossfade
-  const FADE_MS = 1200;       // must match CSS opacity transition duration
+    // ===== HERO CROSSFADE (smooth, preloaded, reduced-motion aware) =====
+    const ROTATION_MS = 6000;   // display time per image
+    const FADE_MS = 1200;       // should match CSS opacity transition
 
-  const sources = [
-    "assets/porsche-hero-1.jpg",
-    "assets/porsche-hero-2.jpg",
-    "assets/porsche-hero-3.jpg",
-    "assets/porsche-hero-4.jpg"
-  ];
-  const fallbackSrc = "assets/Porsche.jpg";
+    const sources = [
+      "assets/porsche-hero-1.jpg",
+      "assets/porsche-hero-2.jpg",
+      "assets/porsche-hero-3.jpg",
+      "assets/porsche-hero-4.jpg"
+    ];
+    const fallbackSrc = "assets/Porsche.jpg";
 
-  // Preload helper
-  const preload = (src) => new Promise(res => {
-    const img = new Image();
-    img.onload = () => res({src, ok:true});
-    img.onerror = () => res({src, ok:false});
-    img.src = src;
-  });
+    const preload = (src) => new Promise(res => {
+      const img = new Image();
+      img.onload = () => res({src, ok:true});
+      img.onerror = () => res({src, ok:false});
+      img.src = src;
+    });
 
-  (async function startHero(){
-    const ok = (await Promise.all(sources.map(preload)))
-                .filter(r => r.ok).map(r => r.src);
+    (async function startHero(){
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const rotation = ok.length ? ok : [fallbackSrc];
+      // Preload and filter to existing images
+      const ok = (await Promise.all(sources.map(preload)))
+                  .filter(r => r.ok).map(r => r.src);
+      const rotation = ok.length ? ok : [fallbackSrc];
 
-    const hero = document.getElementById("hero");
-    const layerA = hero.querySelector(".layer-a");
-    const layerB = hero.querySelector(".layer-b");
+      const hero = document.getElementById("hero");
+      const layerA = hero.querySelector(".layer-a");
+      const layerB = hero.querySelector(".layer-b");
 
-    // Set initial images
-    let i = 0;
-    layerA.style.backgroundImage = `url('${rotation[i]}')`;
-    layerB.style.backgroundImage = `url('${rotation[(i+1)%rotation.length]}')`;
+      // Set initial images
+      let i = 0;
+      layerA.style.backgroundImage = `url('${rotation[i]}')`;
+      layerB.style.backgroundImage = `url('${rotation[(i+1)%rotation.length]}')`;
 
-    // If only one image, stop here
-    if (rotation.length < 2) return;
+      // If only one image or user prefers reduced motion, stop rotation
+      if (rotation.length < 2 || prefersReduced) return;
 
-    let showA = true;
+      let showA = true;
 
-    setInterval(() => {
-      i = (i + 1) % rotation.length;
-      const nextSrc = rotation[i];
+      setInterval(() => {
+        i = (i + 1) % rotation.length;
+        const nextSrc = rotation[i];
 
-      if (showA) {
-        // prepare B behind the scenes
-        layerB.style.backgroundImage = `url('${nextSrc}')`;
-        // crossfade A -> B
-        layerA.style.opacity = 0;
-        layerB.style.opacity = 1;
-        // subtle zoom reset for depth effect
-        layerA.style.transform = 'scale(1.02)';
-        layerB.style.transform = 'scale(1.0)';
-      } else {
-        layerA.style.backgroundImage = `url('${nextSrc}')`;
-        layerA.style.opacity = 1;
-        layerB.style.opacity = 0;
-        layerB.style.transform = 'scale(1.02)';
-        layerA.style.transform = 'scale(1.0)';
-      }
-      showA = !showA;
-    }, ROTATION_MS);
-  })();
-</script>
+        if (showA) {
+          layerB.style.backgroundImage = `url('${nextSrc}')`;
+          layerA.style.opacity = 0;
+          layerB.style.opacity = 1;
+          layerA.style.transform = 'scale(1.02)';
+          layerB.style.transform = 'scale(1.0)';
+        } else {
+          layerA.style.backgroundImage = `url('${nextSrc}')`;
+          layerA.style.opacity = 1;
+          layerB.style.opacity = 0;
+          layerB.style.transform = 'scale(1.02)';
+          layerA.style.transform = 'scale(1.0)';
+        }
+        showA = !showA;
+      }, ROTATION_MS);
+    })();
+  </script>
 </body>
 </html>
