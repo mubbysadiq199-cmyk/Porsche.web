@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Precision Meets Power</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --brand-accent:#d4af37; /* gold */
+      --brand-accent-2:#f0c75e;
+      --text:#ffffff;
+      --bg:#000000;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+
+    body{
+      font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;
+      background:var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
+    }
+
+    /* HERO */
+    .hero{
+      position:relative;
+      min-height:100svh;
+      display:grid;
+      place-items:center;
+      isolation:isolate;
+      overflow:hidden;
+    }
+
+    /* Background layer that we swap via JS */
+    .hero::before{
+      content:"";
+      position:absolute; inset:0;
+      background:#000 center/cover no-repeat;
+      transition:opacity .8s ease;
+      opacity:1;
+      z-index:-2;
+    }
+
+    /* Dark gradient + vignette for readability */
+    .hero::after{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        radial-gradient(120% 80% at 50% 100%, rgba(0,0,0,.85) 0%, rgba(0,0,0,.4) 35%, rgba(0,0,0,.6) 60%, rgba(0,0,0,.9) 100%),
+        linear-gradient(180deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,.75) 100%);
+      z-index:-1;
+    }
+
+    .container{
+      width:min(1200px, 92%);
+      margin-inline:auto;
+      text-align:center;
+    }
+
+    .eyebrow{
+      letter-spacing:.35em;
+      text-transform:uppercase;
+      font-weight:500;
+      opacity:.9;
+      font-size:.85rem;
+    }
+
+    h1.hero-title{
+      margin-top:.75rem;
+      font-weight:700;
+      line-height:1.02;
+      font-size:clamp(2rem, 6vw, 4.25rem);
+      letter-spacing:.02em;
+    }
+
+    p.hero-sub{
+      margin-top:1rem;
+      font-weight:300;
+      opacity:.9;
+      font-size:clamp(0.95rem, 2.2vw, 1.15rem);
+    }
+
+    .cta-row{
+      margin-top:2rem;
+      display:flex;
+      gap:.9rem;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      appearance:none;
+      border:none;
+      cursor:pointer;
+      padding:.9rem 1.4rem;
+      border-radius:999px;
+      font-weight:600;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:.5rem;
+      transition:transform .25s ease, opacity .25s ease, box-shadow .25s ease;
+      will-change:transform;
+    }
+
+    .btn-primary{
+      background:linear-gradient(90deg, var(--brand-accent), var(--brand-accent-2));
+      color:#000;
+      box-shadow:0 10px 30px rgba(212,175,55,.25);
+    }
+    .btn-ghost{
+      background:rgba(255,255,255,.08);
+      color:#fff;
+      border:1px solid rgba(255,255,255,.15);
+      backdrop-filter:saturate(140%) blur(6px);
+    }
+    .btn:hover{ transform:translateY(-2px); }
+
+    /* Header (optional simple brand spot) */
+    header.nav{
+      position:fixed;
+      top:0; left:0; right:0;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 22px;
+      z-index:10;
+      background:linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,0));
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .brand{ font-weight:700; letter-spacing:.08em; text-transform:uppercase; font-size:.95rem; opacity:.95; }
+    .nav a{ color:#fff; text-decoration:none; opacity:.9; font-size:.9rem; }
+
+    /* Accessibility: skip fade-in flash on prefers-reduced-motion */
+    @media (prefers-reduced-motion: reduce){
+      .hero::before{ transition:none }
+      .btn{ transition:none }
+    }
+
+    /* Mobile spacing */
+    @media (max-width:520px){
+      .cta-row{ gap:.6rem }
+      .btn{ padding:.8rem 1.1rem; font-size:.95rem }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="brand">BRAQZ</div>
+    <nav class="nav">
+      <a href="specs.html">Specs</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="hero">
+      <div class="container">
+        <div class="eyebrow">Porsche 911 Series</div>
+        <h1 class="hero-title">Precision Meets Power</h1>
+        <p class="hero-sub">Cinematic engineering. Track DNA. Street presence.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="explore.html">Explore Models</a>
+          <a class="btn btn-ghost" href="specs.html">View Specs</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    /**
+     * HERO BACKGROUND ROTATOR
+     * Drop the images into /assets with the names below.
+     * If you still have Porsche.jpg, it’ll be used as a final fallback.
+     */
+    const hero = document.getElementById('hero');
+
+    const images = [
+      'assets/porsche-hero-1.jpg',
+      'assets/porsche-hero-2.jpg',
+      'assets/porsche-hero-3.jpg',
+      'assets/porsche-hero-4.jpg'
+    ];
+
+    // Fallback if some images are missing
+    const fallback = 'assets/Porsche.jpg';
+
+    // Preload images that exist
+    const preload = (src) => new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => resolve({ src, ok: true });
+      img.onerror = () => resolve({ src, ok: false });
+      img.src = src;
+    });
+
+    (async function initHero(){
+      const checks = await Promise.all(images.map(preload));
+      let rotation = checks.filter(c => c.ok).map(c => c.src);
+      if (rotation.length === 0) {
+        const fb = await preload(fallback);
+        rotation = fb.ok ? [fallback] : [];
+      }
+
+      // If we still have nothing, leave default black bg
+      if (rotation.length === 0) return;
+
+      let i = 0;
+      const setBg = (src, fade=true) => {
+        if (fade){
+          hero.style.setProperty('--fade', '1');
+          hero.style.opacity = '0.8';
+          setTimeout(() => {
+            hero.style.setProperty('--fade', '0');
+            hero.style.opacity = '1';
+          }, 250);
+        }
+        hero.style.setProperty('--bg', `url('${src}')`);
+        hero.style.backgroundImage = `url('${src}')`; // legacy
+        hero.style.backgroundSize = 'cover';
+        hero.style.backgroundPosition = 'center';
+      };
+
+      // Use ::before for smooth fades via CSS opacity
+      const applyBg = (src) => {
+        hero.style.setProperty('--hero-bg', `url('${src}')`);
+        hero.style.setProperty('--hero-opacity', '1');
+        hero.style.setProperty('--fade', '0');
+        hero.style.setProperty('--bg', `url('${src}')`);
+        hero.style.setProperty('--next-bg', `url('${src}')`);
+        hero.style.backgroundImage = `url('${src}')`;
+        hero.style.backgroundSize = 'cover';
+        hero.style.backgroundPosition = 'center';
+        hero.style.backgroundRepeat = 'no-repeat';
+        hero.style.setProperty('--overlay', '1');
+        hero.style.setProperty('--blur', '0');
+        // But we actually set the ::before style directly:
+        hero.style.setProperty('--dummy','0'); // noop
+        hero.style.cssText += `--current:'${src}';`;
+        hero.style.cssText += '';
+        hero.style.cssText += '';
+        hero.style.cssText += '';
+      };
+
+      // Apply using the ::before rule (works with our CSS)
+      const setBackgroundImage = (src) => {
+        hero.style.setProperty('--current-image', `url('${src}')`);
+        hero.style.setProperty('--dummy', Math.random()); // force style recalc
+        // Directly modify the pseudo element via style tag injection:
+        let styleEl = document.getElementById('hero-dyn-style');
+        if(!styleEl){
+          styleEl = document.createElement('style');
+          styleEl.id = 'hero-dyn-style';
+          document.head.appendChild(styleEl);
+        }
+        styleEl.textContent = `
+          #hero::before{ background-image:url('${src}'); }
+        `;
+      };
+
+      // Start
+      setBackgroundImage(rotation[i]);
+
+      // Rotate every 5 seconds
+      if (rotation.length > 1){
+        setInterval(() => {
+          i = (i + 1) % rotation.length;
+          // brief fade by toggling opacity
+          hero.style.transition = 'opacity .8s ease';
+          hero.style.opacity = '0.6';
+          setTimeout(() => {
+            setBackgroundImage(rotation[i]);
+            hero.style.opacity = '1';
+          }, 220);
+        }, 5000);
+      }
+    })();
+  </script>
+</body>
+</html>
