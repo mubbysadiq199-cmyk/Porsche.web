@@ -17,7 +17,7 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Sora,system-ui;background:var(--bg);color:var(--txt);overflow-x:hidden}
 
-/* ===== Header (same dropdown) ===== */
+/* Header (dropdown) */
 header.nav{
   position:fixed; top:0; left:0; right:0; z-index:20;
   display:flex; align-items:center; justify-content:space-between;
@@ -35,14 +35,15 @@ nav.nav a:hover{ opacity:1; border-bottom:2px solid var(--gold); padding-bottom:
 .menu-toggle span{ height:3px; width:26px; background:#fff; display:block; border-radius:3px }
 @media (max-width:820px){
   .menu-toggle{ display:flex; flex-direction:column; gap:6px; width:34px; height:28px }
-  nav.nav{ position:fixed; top:64px; right:0; flex-direction:column; gap:0;
+  nav.nav{
+    position:fixed; top:64px; right:0; flex-direction:column; gap:0;
     background:rgba(0,0,0,.95); padding:12px 18px; border-left:1px solid var(--line);
     backdrop-filter:blur(6px); transform:translateX(100%); transition:transform .28s ease }
   nav.nav.open{ transform:translateX(0) }
 }
 .page-offset{ padding-top:76px }
 
-/* ===== Hero ===== */
+/* Hero */
 .hero{
   width:min(1200px,92%); margin:0 auto 32px; padding:18px 0 2px;
   border-bottom:1px solid var(--line);
@@ -51,67 +52,53 @@ nav.nav a:hover{ opacity:1; border-bottom:2px solid var(--gold); padding-bottom:
 .hero h1{ font-family:Teko; text-transform:uppercase; letter-spacing:.05em; font-size:clamp(1.9rem,4.5vw,3rem); margin:.3rem 0 .5rem }
 .hero p{ color:var(--muted); max-width:62ch }
 
-/* ===== Sections ===== */
+/* Section shell */
 .wrap{ width:min(1200px,92%); margin:18px auto 64px }
 
+/* Buttons */
+.btn{ appearance:none; border:1px solid var(--line); background:#111; color:#fff; padding:.6rem .9rem; border-radius:999px; cursor:pointer; font-weight:600 }
+.btn:hover{ border-color:rgba(255,255,255,.2) }
+.btn-row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center }
+
 /* Audio grid */
-.audio-grid{
-  display:grid; gap:14px;
-  grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
-}
-.card{
-  position:relative; background:var(--panel);
-  border:1px solid var(--line); border-radius:14px; overflow:hidden;
-}
+.audio-grid{ display:grid; gap:14px; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)) }
+.card{ position:relative; background:var(--panel); border:1px solid var(--line); border-radius:14px; overflow:hidden }
 .card.pad{ padding:14px 14px 12px }
 .card h3{ font-family:Teko; letter-spacing:.03em; text-transform:uppercase; color:var(--gold); font-size:1.1rem }
 .card p{ color:var(--muted); font-size:.95rem; margin-top:2px }
-
-/* Play tile */
-.audio-tile{
-  display:grid; gap:10px; align-content:start; cursor:pointer;
-}
+.audio-tile{ display:grid; gap:10px; align-content:start; cursor:pointer }
 .audio-bar{ display:flex; gap:3px; height:16px; align-items:flex-end; margin-top:4px }
-.audio-bar span{
-  width:3px; height:6px; background:rgba(255,255,255,.35); border-radius:2px;
-  transition:height .15s linear, background .15s linear;
-}
+.audio-bar span{ width:3px; height:6px; background:rgba(255,255,255,.35); border-radius:2px; transition:height .15s linear, background .15s linear }
 .audio-tile.playing .audio-bar span{ background:var(--gold) }
-.audio-tile.playing .audio-bar span:nth-child(odd){ height:16px; animation:wave 0.6s ease-in-out infinite }
-.audio-tile.playing .audio-bar span:nth-child(even){ height:12px; animation:wave 0.6s ease-in-out .2s infinite }
+.audio-tile.playing .audio-bar span:nth-child(odd){ height:16px; animation:wave .6s ease-in-out infinite }
+.audio-tile.playing .audio-bar span:nth-child(even){ height:12px; animation:wave .6s ease-in-out .2s infinite }
 @keyframes wave{ 0%,100%{transform:scaleY(.7)} 50%{transform:scaleY(1)} }
 
-/* stop all */
-.actions{ display:flex; justify-content:flex-end; margin-top:8px }
-.btn{
-  appearance:none; border:1px solid var(--line); background:#111; color:#fff;
-  padding:.6rem .9rem; border-radius:999px; cursor:pointer; font-weight:600;
-}
-.btn:hover{ border-color:rgba(255,255,255,.2) }
-
-/* Video grid */
-.video-grid{
-  display:grid; gap:16px;
-  grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
-}
+/* Videos */
+.video-grid{ display:grid; gap:16px; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)) }
 .vcard{
   position:relative; border:1px solid var(--line); border-radius:16px; overflow:hidden; background:#111;
+  transition: box-shadow .3s ease, border-color .3s ease, filter .3s ease;
 }
-.vmeta{
-  position:absolute; left:12px; bottom:10px; right:12px;
-  display:flex; justify-content:space-between; align-items:end;
-  color:#fff; text-shadow:0 2px 10px rgba(0,0,0,.8);
-}
+.vcard.playing{ border-color:rgba(212,175,55,.65); box-shadow:0 0 0 2px rgba(212,175,55,.25), 0 12px 40px rgba(0,0,0,.45) }
+.vmeta{ position:absolute; left:12px; bottom:10px; right:12px; display:flex; justify-content:space-between; align-items:end; color:#fff; text-shadow:0 2px 10px rgba(0,0,0,.8) }
 .vtitle{ font-family:Teko; text-transform:uppercase; letter-spacing:.04em; font-size:1.05rem }
 .badge{ background:rgba(0,0,0,.6); border:1px solid var(--line); padding:.2rem .5rem; border-radius:6px; color:var(--gold); font-weight:700 }
-
-/* video element defaults */
-video{
-  width:100%; height:100%; display:block; object-fit:cover;
-  background:
-    radial-gradient(90% 60% at 70% 20%, rgba(212,175,55,.08), transparent 60%),
-    linear-gradient(180deg, rgba(0,0,0,.2), rgba(0,0,0,.7));
+video{ width:100%; height:100%; display:block; object-fit:cover;
+  background: radial-gradient(90% 60% at 70% 20%, rgba(212,175,55,.08), transparent 60%),
+             linear-gradient(180deg, rgba(0,0,0,.2), rgba(0,0,0,.7));
 }
+
+/* per-video volume button */
+.vcontrols{
+  position:absolute; top:10px; right:10px; display:flex; gap:8px; z-index:2;
+}
+.iconbtn{
+  width:36px; height:36px; display:grid; place-items:center; border-radius:999px;
+  background:rgba(0,0,0,.55); border:1px solid var(--line); color:#fff; cursor:pointer;
+}
+.iconbtn:hover{ background:rgba(0,0,0,.7) }
+.icon{ font-size:18px; line-height:1 }
 </style>
 </head>
 <body>
@@ -135,46 +122,50 @@ video{
   <section class="hero">
     <p class="eyebrow">Porsche 911 Series</p>
     <h1>Feel the Mechanics</h1>
-    <p>Listen to the flat-six breathe — and watch the 911 in motion. Sounds are short and loopable; videos auto-play when in view.</p>
+    <p>Listen to the flat-six breathe — and watch the 911 in motion. Sounds loop on tap; videos auto-play when in view and pause when they’re not.</p>
   </section>
 
-  <!-- Engine Sound Library -->
+  <!-- Audio -->
   <section class="wrap" aria-labelledby="audioLibTitle">
-    <h2 id="audioLibTitle" class="eyebrow" style="margin-bottom:10px">Engine Sound Library</h2>
+    <div style="display:flex;justify-content:space-between;align-items:end;gap:10px;margin-bottom:10px">
+      <h2 id="audioLibTitle" class="eyebrow">Engine Sound Library</h2>
+      <div class="btn-row"><button class="btn" id="stopAll">Stop All</button></div>
+    </div>
     <div class="audio-grid">
-      <!-- Each tile -->
       <article class="card pad audio-tile" data-src="assets/media/audio/Straight-cutting-gears.mp3">
         <h3>Straight-Cutting Gears</h3>
         <p>Raw mechanical whine.</p>
-        <div class="audio-bar" aria-hidden="true">
-          <span></span><span></span><span></span><span></span><span></span><span></span>
-        </div>
+        <div class="audio-bar" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
       </article>
-
       <article class="card pad audio-tile" data-src="assets/media/audio/pops-bangs.mp3">
         <h3>Pops & Bangs</h3>
         <p>Overrun crackles.</p>
-        <div class="audio-bar" aria-hidden="true">
-          <span></span><span></span><span></span><span></span><span></span><span></span>
-        </div>
+        <div class="audio-bar" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
       </article>
-
       <article class="card pad audio-tile" data-src="assets/media/audio/speed-sound.mp3">
         <h3>Speed Pull</h3>
         <p>Short pull to redline.</p>
-        <div class="audio-bar" aria-hidden="true">
-          <span></span><span></span><span></span><span></span><span></span><span></span>
-        </div>
+        <div class="audio-bar" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
       </article>
     </div>
-    <div class="actions"><button class="btn" id="stopAll">Stop All</button></div>
   </section>
 
-  <!-- Video Grid -->
+  <!-- Videos -->
   <section class="wrap" aria-labelledby="videoTitle">
-    <h2 id="videoTitle" class="eyebrow" style="margin-bottom:10px">In Motion</h2>
+    <div style="display:flex;justify-content:space-between;align-items:end;gap:10px;margin-bottom:10px">
+      <h2 id="videoTitle" class="eyebrow">In Motion</h2>
+      <div class="btn-row">
+        <button class="btn" id="playAll">Play All</button>
+        <button class="btn" id="pauseAll">Pause All</button>
+        <button class="btn" id="muteAll">Mute All</button>
+      </div>
+    </div>
+
     <div class="video-grid">
       <article class="vcard">
+        <div class="vcontrols">
+          <button class="iconbtn muteBtn" aria-label="Toggle sound"><span class="icon">🔇</span></button>
+        </div>
         <video class="autoVideo" muted playsinline webkit-playsinline preload="auto" loop
                src="assets/media/video/gt3-horse.mp4"></video>
         <div class="vmeta">
@@ -182,13 +173,24 @@ video{
           <div class="badge">Auto-Play</div>
         </div>
       </article>
-      <!-- If you add more mp4s later, duplicate vcard blocks -->
+
+      <article class="vcard">
+        <div class="vcontrols">
+          <button class="iconbtn muteBtn" aria-label="Toggle sound"><span class="icon">🔇</span></button>
+        </div>
+        <video class="autoVideo" muted playsinline webkit-playsinline preload="auto" loop
+               src="assets/media/video/gt3-edit.mp4"></video>
+        <div class="vmeta">
+          <div class="vtitle">GT3 RS — Track Symphony</div>
+          <div class="badge">Auto-Play</div>
+        </div>
+      </article>
     </div>
   </section>
 </div>
 
 <script>
-/* auto-hide header like other pages */
+/* auto-hide header */
 let lastScroll=0;
 const nav=document.querySelector("header.nav");
 window.addEventListener("scroll",()=>{
@@ -208,63 +210,60 @@ menuToggle?.addEventListener("click",()=>{
 /* ===== Audio tiles ===== */
 const tiles = document.querySelectorAll('.audio-tile');
 const audios = new Map();
-
 tiles.forEach(tile=>{
-  const src = tile.dataset.src;
-  const audio = new Audio(src);
-  audio.preload = 'auto';
-  audio.loop = true;
-  audios.set(tile, audio);
-
-  const play = async () => {
-    // stop others
-    audios.forEach((a, t)=>{ if(t!==tile){ a.pause(); t.classList.remove('playing'); } });
-    audio.currentTime = 0;
-    tile.classList.add('playing');
-    try { await audio.play(); } catch(e) { /* ignored */ }
-  };
+  const audio = new Audio(tile.dataset.src);
+  audio.preload='auto'; audio.loop=true; audios.set(tile,audio);
+  const play = async ()=>{ audios.forEach((a,t)=>{ if(t!==tile){ a.pause(); t.classList.remove('playing'); }});
+                           audio.currentTime=0; tile.classList.add('playing'); try{ await audio.play(); }catch{} }
   const stop = ()=>{ audio.pause(); tile.classList.remove('playing'); };
-
-  tile.addEventListener('click', ()=>{
-    if(audio.paused){ play(); } else { stop(); }
-  });
+  tile.addEventListener('click', ()=> audio.paused ? play() : stop() );
 });
+document.getElementById('stopAll').addEventListener('click', ()=> audios.forEach((a,t)=>{ a.pause(); t.classList.remove('playing'); }));
 
-// Stop all button
-document.getElementById('stopAll').addEventListener('click', ()=>{
-  audios.forEach((a, t)=>{ a.pause(); t.classList.remove('playing'); });
-});
-
-/* ===== Videos: autoplay when visible, pause when not ===== */
-const vids = Array.from(document.querySelectorAll('.autoVideo'));
+/* ===== Videos: autoplay on view, pause off view + gold glow while playing ===== */
+const cards=[...document.querySelectorAll('.vcard')];
+const vids=[...document.querySelectorAll('.autoVideo')];
+const muteBtns=[...document.querySelectorAll('.muteBtn')];
 
 function tryPlay(v){ v.muted=true; v.play().catch(()=>{}); }
 
-const io = new IntersectionObserver((entries)=>{
-  entries.forEach(entry=>{
-    const v = entry.target;
-    if(entry.isIntersecting && entry.intersectionRatio >= 0.6){
-      // visible enough → play
-      tryPlay(v);
-    } else {
-      // out of view → pause
-      v.pause();
-    }
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    const v=e.target, card=v.closest('.vcard');
+    if(e.isIntersecting && e.intersectionRatio>=0.6){ tryPlay(v); card?.classList.add('playing'); }
+    else{ v.pause(); card?.classList.remove('playing'); }
   });
-},{ threshold:[0,0.6,1] });
+},{threshold:[0,0.6,1]});
 
 vids.forEach(v=>{
   io.observe(v);
-  // iOS/iPadOS nudge
   v.addEventListener('loadeddata', ()=>tryPlay(v), {once:true});
   window.addEventListener('load', ()=>tryPlay(v));
 });
 
-/* also resume on user interaction (Safari quirk) */
+/* per-video mute toggle (tap to hear that one video) */
+muteBtns.forEach((btn, i)=>{
+  const v = vids[i];
+  btn.addEventListener('click', ()=>{
+    const newMuted = !v.muted;
+    // mute all others when unmuting one (so it stands out)
+    if(!newMuted){ vids.forEach((ov,j)=>{ if(j!==i){ ov.muted=true; muteBtns[j].querySelector('.icon').textContent='🔇'; } }); }
+    v.muted = newMuted;
+    btn.querySelector('.icon').textContent = v.muted ? '🔇' : '🔊';
+    if(v.paused) tryPlay(v);
+  });
+});
+
+/* Global controls */
+document.getElementById('playAll').addEventListener('click', ()=> vids.forEach(v=>tryPlay(v)));
+document.getElementById('pauseAll').addEventListener('click', ()=> vids.forEach(v=>v.pause()));
+document.getElementById('muteAll').addEventListener('click', ()=>{
+  vids.forEach((v,i)=>{ v.muted=true; muteBtns[i].querySelector('.icon').textContent='🔇'; });
+});
+
+/* iOS extra nudges */
 ['touchstart','pointerdown','click','keydown','visibilitychange'].forEach(evt=>{
-  document.addEventListener(evt, ()=>{
-    vids.forEach(v=>{ if(v.paused) tryPlay(v); });
-  }, {passive:true, once:false});
+  document.addEventListener(evt, ()=> vids.forEach(v=>{ if(v.paused) tryPlay(v); }), {passive:true});
 });
 </script>
 </body>
