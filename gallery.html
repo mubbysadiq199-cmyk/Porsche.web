@@ -10,6 +10,39 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600&family=Teko:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
+  /* Header */
+header.nav{
+  position:fixed; top:0; left:0; right:0; z-index:10;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:16px 22px;
+  background:linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,0));
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.brand{
+  font-family:"Teko",system-ui; font-weight:700; text-transform:uppercase;
+  letter-spacing:.06em; opacity:.95; white-space:nowrap; font-size:1.05rem;
+}
+nav.nav{ display:flex; gap:1.5rem; }
+nav.nav a{ color:#fff; text-decoration:none; opacity:.9; font-size:.95rem; font-weight:500; }
+nav.nav a:hover{ opacity:1; border-bottom:2px solid #d4af37; padding-bottom:2px; }
+
+/* Mobile menu */
+.menu-toggle{ display:none; background:transparent; border:0; cursor:pointer; }
+.menu-toggle span{ height:3px; width:26px; background:#fff; display:block; border-radius:3px; }
+@media (max-width:640px){
+  .menu-toggle{ display:flex; flex-direction:column; gap:6px; width:34px; height:28px; }
+  nav.nav{
+    position:fixed; top:64px; right:0;
+    flex-direction:column; gap:0;
+    background:rgba(0,0,0,.92); padding:12px 18px;
+    border-left:1px solid rgba(255,255,255,.1); backdrop-filter:blur(6px);
+    transform:translateX(100%); transition:transform .28s ease;
+  }
+  nav.nav.open{ transform:translateX(0); }
+}
+
+/* Push page content below fixed header */
+.page-offset{ padding-top:76px; }
   :root{ --bg:#000; --txt:#fff; --gold:#d4af37; --muted:rgba(255,255,255,.7) }
   *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:Sora,system-ui}
   h1,h2{font-family:Teko,system-ui;text-transform:uppercase;letter-spacing:.04em}
@@ -82,6 +115,20 @@
 </style>
 </head>
 <body>
+  <header class="nav" role="navigation" aria-label="Primary">
+  <div class="brand">The 911 Experience</div>
+
+  <button class="menu-toggle" id="menuToggle" aria-label="Menu" aria-controls="mainNav" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <nav class="nav" id="mainNav">
+    <a href="index.html">Home</a>
+    <a href="gallery.html" aria-current="page">Gallery</a>
+    <a href="media.html">Audio & Video</a>
+    <a href="specs.html">Specs</a>
+  </nav>
+</header>
   <div class="wrap">
     <h1>911 Collections</h1>
     <p class="muted"></p>
@@ -246,6 +293,13 @@ function buildCarousel(section){
 
 // Build all carousels on page
 document.querySelectorAll('.collection').forEach(buildCarousel);
+<script>
+  const menuToggle = document.getElementById('menuToggle');
+  const mainNav = document.getElementById('mainNav');
+  menuToggle?.addEventListener('click', ()=>{
+    const open = mainNav.classList.toggle('open');
+    menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
 </script>
 </body>
 </html>
