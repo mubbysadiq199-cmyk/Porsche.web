@@ -131,6 +131,16 @@ header.nav.hide {
 
   @media(max-width:540px){ .slideshow{ aspect-ratio:9/16 } }
   @media (prefers-reduced-motion: reduce){ .slide, .slide.is-out{ transition:none; transform:none } }
+  /* remove blue outline on click */
+.collection:focus {
+  outline: none;
+}
+
+/* optional: gold outline on keyboard focus */
+.collection:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
   html{ scroll-behavior:smooth; }
 </style>
 </head>
